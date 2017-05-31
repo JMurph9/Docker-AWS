@@ -69,5 +69,5 @@ Vagrant.configure("2") do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "shared", "/opt"
   config.vm.synced_folder "shared", "/vagrant", type: "virtualbox"
-  
+
 end

@@ -1,8 +1,7 @@
 
 
 //Create security group
-aws ec2 authorize-security-group-ingress --group-name JackSecurityGroup --protocol tcp
---port 22 --cidr 164.75.108/24
+aws ec2 authorize-security-group-ingress --group-name JackSecurityGroup --protocol tcp --port 22 --cidr 164.75.108/24
 //cidr is ip address
 
 //check security group by group name

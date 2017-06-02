@@ -1,0 +1,43 @@
+
+
+//Create security group
+aws ec2 authorize-security-group-ingress --group-name JackSecurityGroup --protocol tcp
+--port 22 --cidr 164.75.108/24
+//cidr is ip address
+
+//check security group by group name
+aws ec2 describe-security-groups --group-names JackSecurityGroup
+
+//Create key pair
+aws ec2 create-key-pair --key-name JacksKeyPair
+
+//Run new instance
+aws ec2 run-instnaces --image-id ami-f1d7c395 --count 1 --instance-type t2.micro --keyname JacksKeyPair 
+--security-group-ids sg-7c264a15
+
+//Create a bucket s3
+//bucket name has to be completely unique to the whole region
+aws s3api create-bucket --bucket jmoney909-bucket --region eu-west-2 --create-bucket-configuration LocationConstraint=eu-west-2
+//stored at http://jmoney909-bucket.s3.eu-west-2.amazonaws.com/
+
+//List buckets
+aws s3 ls
+
+//Upload file to bucket. Navigate to directory where the file is
+aws s3 cp AWS-CLI-Instructions.txt s3://jmoney909-bucket/
+
+// List the contents of my-bucket
+aws s3 ls s3://jmoney909-bucket
+
+// List the contents of path in my-bucket
+aws s3 ls s3://jmoney909-bucket/path
+
+// Delete s3://my-bucket/path/MyFile.txt
+aws s3 rm s3://jmoney909-bucket/path/AWS-CLI-Instructions.txt
+
+// Delete s3://my-bucket/path and all of its contents
+$ aws s3 rm s3://jmoney909-bucket/path --recursive
+
+//Delete bucket
+aws s3api delete-bucket --bucket jmoney909-bucket --region eu-west-2
+

@@ -1,0 +1,56 @@
+//1: Install Docker
+
+wget -qO- https://get.docker.com/ | sh
+
+//2: Jenkins
+docker pull jenkins
+docker run -p 8080:8080 -p 50000:50000 jenkins
+
+//3: Dockerfile
+FROM ubuntu:14.04
+
+#Always update your running system
+RUN sudo apt-get update -y
+
+#You may or may not need to run these commands
+RUN sudo apt-get install -y wget
+RUN sudo apt-get install -y tar
+
+#installs the libraries needed to run the GUI
+RUN sudo apt-get install -y libgtk2.0
+RUN sudo apt-get install -y mesa-utils
+RUN sudo apt-get install -y libXtst6
+
+WORKDIR /opt
+
+ADD files /opt
+
+RUN sudo tar zxvf /opt/java.tar.gz
+
+RUN sudo update-alternatives --install /usr/bin/java java /opt/jdk1.8.0_74/bin/java 100
+RUN sudo update-alternatives --install /usr/bin/javac javac /opt/jdk1.8.0_74/bin/javac 100
+
+docker build -t Dockerfile
+
+//Java Program
+sudo touch helloworld.java
+sudo nano helloworld.java
+
+	public static void main(String args[])	{
+		System.out.println("Hello World!");
+	}
+	
+javac helloworld.java
+java helloworld
+
+//4: Linked container
+docker run --name jacks-mysql -e MYSQL_ROOT_PASSWORD=secret -d mysql:8
+sudo docker exec -ti jacksmysql /bin/bash
+
+sudo docker pull php
+
+
+//6: Install Kubernetes
+sudo snap install conjure-up --classic
+
+//and follow install instructions VERY carefully
